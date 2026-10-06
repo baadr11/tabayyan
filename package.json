@@ -1,0 +1,28 @@
+{
+ "type": "module",
+ "name": "tabayyan",
+ "private": true,
+ "scripts": {
+  "test": "node test/dorar.test.mjs && node test/logic.test.mjs && node test/engine.test.mjs && node test/semantic.test.mjs && node test/scope.test.mjs && node test/index.test.mjs",
+  "dev": "node dev/server.mjs",
+  "build:ai": "node tools/fetch-model.mjs && node tools/build-embeddings.mjs",
+  "import:hadeethenc": "node tools/import-hadeethenc.mjs",
+  "eval": "node tools/eval.mjs",
+  "icadb:probe": "node tools/icadb-probe.mjs",
+  "import:icadb": "node tools/import-icadb.mjs",
+  "build:index": "node tools/build-index.mjs",
+  "build": "node tools/build.mjs",
+  "check": "node tools/release-check.mjs",
+  "release": "npm run build:index && npm run check -- --ai && npm run build",
+  "preview": "node dev/server.mjs --dist",
+  "deploy": "npm run release && npx wrangler pages deploy dist --project-name tabayyan",
+  "fetch:model": "node tools/fetch-model.mjs"
+ },
+ "devDependencies": {
+  "@huggingface/transformers": "4.3.0"
+ },
+ "version": "1.0.0",
+ "engines": {
+  "node": ">=18"
+ }
+}

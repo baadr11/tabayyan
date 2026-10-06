@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>تبيَّن — تحقّق من الحديث قبل أن تنشره</title>
+<meta name="description" content="الصق أي حديث منتشر بأي لغة: نعيده إلى نصه العربي ونُظهر موضعه في كتب السنة وأحكام المحدّثين عليه، وإن لم نجده نقولها صراحة.">
+<meta name="theme-color" content="#12183F">
+<meta property="og:title" content="تبيَّن — تحقّق من الحديث قبل أن تنشره">
+<meta property="og:description" content="أداة مدعومة بالذكاء الاصطناعي للتحقق من نسبة الأحاديث المنتشرة بأي لغة، بأحكام المحدّثين ومصادرها.">
+<meta property="og:type" content="website"><meta property="og:image" content="icons/icon-512.png"><meta property="og:locale" content="ar_SA">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+@font-face{font-family:"Salawat";src:url("fonts/salawat.woff") format("woff");unicode-range:U+FDFA-FDFB;font-display:block}
+@font-face{font-family:"Azer";src:url("fonts/azer.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Bukra";src:url("fonts/bukra-regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Bukra";src:url("fonts/bukra-bold.ttf") format("truetype");font-weight:700;font-display:swap}
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#0E1336; --bg-2:#12183F; --panel:#161D4A; --panel-2:#1B2358; --line:rgba(242,244,255,.10); --line-2:rgba(242,244,255,.18);
+  --ink:#F2F4FF; --ink-2:#C3C8EC; --ink-3:#8990BF;
+  --accent:#2EF2C2; --accent-ink:#0E1336; --violet:#6150EA; --violet-2:#8C80FF;
+  --ok:#2EF2C2; --ok-bg:rgba(46,242,194,.10);
+  --warn:#F7B955; --warn-bg:rgba(247,185,85,.11);
+  --bad:#FF6F86; --bad-bg:rgba(255,111,134,.11);
+  --none:#A99FFF; --none-bg:rgba(169,159,255,.12);
+  --display:"Salawat","Azer","Readex Pro","Segoe UI",Tahoma,sans-serif;
+  --ui:"Salawat","Bukra","Readex Pro","Segoe UI",Tahoma,sans-serif;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#F2F4FF; --bg-2:#E9ECFC; --panel:#FFFFFF; --panel-2:#F5F6FE; --line:rgba(18,24,63,.10); --line-2:rgba(18,24,63,.18);
+    --ink:#12183F; --ink-2:#434A78; --ink-3:#596089;
+    --accent:#6150EA; --accent-ink:#FFFFFF; --violet:#6150EA; --violet-2:#6150EA;
+    --ok:#06705A; --ok-bg:rgba(11,158,124,.09);
+    --warn:#875404; --warn-bg:rgba(176,111,6,.09);
+    --bad:#A8213A; --bad-bg:rgba(200,48,75,.08);
+    --none:#4E42C4; --none-bg:rgba(91,79,214,.09);
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F2F4FF; --bg-2:#E9ECFC; --panel:#FFFFFF; --panel-2:#F5F6FE; --line:rgba(18,24,63,.10); --line-2:rgba(18,24,63,.18);
+  --ink:#12183F; --ink-2:#434A78; --ink-3:#596089;
+  --accent:#6150EA; --accent-ink:#FFFFFF; --violet:#6150EA; --violet-2:#6150EA;
+  --ok:#06705A; --ok-bg:rgba(11,158,124,.09); --warn:#875404; --warn-bg:rgba(176,111,6,.09);
+  --bad:#A8213A; --bad-bg:rgba(200,48,75,.08); --none:#4E42C4; --none-bg:rgba(91,79,214,.09);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;min-height:100vh}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+[hidden]{display:none!important}
+
+/* ---------- top ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0 0}
+.mark{display:flex;align-items:center;gap:14px}
+.mark svg{flex:none}
+.mark b{font-family:var(--display);font-weight:400;font-size:34px;line-height:1;letter-spacing:0}
+.meta{display:flex;gap:18px;font-size:13px;color:var(--ink-3);align-items:center;flex-wrap:wrap}
+.meta strong{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+.dbstate{display:inline-flex;align-items:center;gap:8px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--warn)}
+.dot.ok{background:var(--ok)}
+
+/* ---------- hero / composer ---------- */
+.hero{position:relative;padding:64px 0 34px}
+.hero::before{content:"";position:absolute;inset:0 -28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%238C80FF' stroke-opacity='.10' stroke-width='1'%3E%3Cpath d='M48 8l11.3 28.7L88 48 59.3 59.3 48 88 36.7 59.3 8 48l28.7-11.3z'/%3E%3Crect x='26' y='26' width='44' height='44' transform='rotate(45 48 48)'/%3E%3C/g%3E%3C/svg%3E");mask-image:linear-gradient(180deg,#000 0%,transparent 85%);-webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 85%);pointer-events:none;z-index:0}
+.hero > *{position:relative;z-index:1}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(46px,7.4vw,96px);line-height:1.15;margin:0 0 12px;letter-spacing:0}
+.hero p.sub{margin:0 0 34px;max-width:620px;color:var(--ink-2);font-size:18px}
+
+.composer{background:var(--panel);border:1px solid var(--line-2);border-radius:26px;padding:10px;display:flex;flex-direction:column;box-shadow:0 30px 80px -40px rgba(0,0,0,.55)}
+.field{display:flex;align-items:stretch;gap:10px}
+.field textarea{flex:1;border:0;background:transparent;resize:none;outline:none;min-height:64px;max-height:220px;padding:16px 18px;font-size:19px;line-height:1.6}
+.field textarea::placeholder{color:var(--ink-3)}
+.actions{display:flex;align-items:flex-end;gap:8px;padding:8px}
+.iconbtn{width:48px;height:48px;border-radius:14px;border:1px solid var(--line-2);background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--ink-2)}
+.iconbtn:hover{color:var(--ink);border-color:var(--ink-3)}
+.go{height:48px;padding:0 26px;border-radius:14px;border:0;background:var(--accent);color:var(--accent-ink);font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:10px;font-size:16px}
+.go[disabled]{opacity:.45;cursor:not-allowed}
+.attach{display:flex;align-items:center;gap:12px;padding:6px 18px 12px}
+.attach img{height:64px;border-radius:10px;border:1px solid var(--line-2)}
+.attach span{font-size:14px;color:var(--ink-2)}
+.attach button{border:0;background:none;color:var(--ink-3);cursor:pointer;font-size:14px;text-decoration:underline}
+.drop-hint{position:absolute;inset:0;border:2px dashed var(--accent);border-radius:26px;display:grid;place-items:center;background:rgba(14,19,54,.75);font-weight:700;opacity:0;pointer-events:none;transition:opacity .15s}
+.composer-wrap{position:relative}
+.composer-wrap.drag .drop-hint{opacity:1}
+
+.tries{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;align-items:center}
+.tries small{color:var(--ink-3);font-size:13px;margin-inline-end:4px}
+.try{border:1px solid var(--line-2);background:transparent;border-radius:999px;padding:7px 14px;cursor:pointer;font-size:14px;color:var(--ink-2);unicode-bidi:plaintext}
+.try:hover{color:var(--ink);border-color:var(--ink-3)}
+
+.notice{margin-top:14px;font-size:13.5px;color:var(--ink-3)}
+.notice b{color:var(--warn);font-weight:500}
+
+/* ---------- progress ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:34px 0 0;padding:0;list-style:none}
+.steps li{padding:14px 16px 0 0;border-top:2px solid var(--line-2);font-size:13px;color:var(--ink-3);min-height:74px}
+.steps li b{display:block;font-size:14px;font-weight:700;color:var(--ink-3)}
+.steps li.run{border-color:var(--violet-2)}
+.steps li.run b{color:var(--ink)}
+.steps li.done{border-color:var(--accent)}
+.steps li.done b{color:var(--ink)}
+.steps li .d{color:var(--ink-2)}
+.stop{margin-top:10px;border:0;background:none;color:var(--ink-3);text-decoration:underline;cursor:pointer;font-size:13px}
+
+/* ---------- result ---------- */
+.result{margin:30px 0 40px}
+.board{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:22px;align-items:start}
+.main{background:var(--panel);border:1px solid var(--line);border-radius:28px;overflow:hidden}
+.verdict{padding:34px 36px 30px;border-bottom:1px solid var(--line)}
+.v-kicker{font-size:14px;color:var(--ink-3);margin-bottom:4px}
+.v-word{font-family:var(--display);font-weight:400;font-size:clamp(64px,10vw,128px);line-height:1.05;margin:0}
+.v-ok{color:var(--ok)} .v-warn{color:var(--warn)} .v-bad{color:var(--bad)} .v-none{color:var(--none)}
+.v-line{font-size:20px;font-weight:700;margin:14px 0 6px;line-height:1.5}
+.v-why{color:var(--ink-2);margin:0;font-size:15.5px}
+.echo{margin-top:18px;display:flex;gap:10px;align-items:baseline;font-size:14px;color:var(--ink-3);flex-wrap:wrap}
+.echo q{quotes:none;color:var(--ink-2);unicode-bidi:plaintext;background:var(--panel-2);border-radius:10px;padding:4px 12px;max-width:100%}
+
+.matn{padding:30px 36px 28px;border-bottom:1px solid var(--line)}
+.matn-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.matn-head span{font-size:14px;color:var(--ink-3)}
+.matn-head b{font-weight:700;color:var(--ink);font-size:15px}
+.matn blockquote{margin:0;font-family:var(--display);font-size:clamp(24px,2.8vw,32px);line-height:1.95;color:var(--ink)}
+.isnad{margin-top:14px}
+.isnad button{border:0;background:none;padding:0;color:var(--ink-3);cursor:pointer;font-size:13.5px;text-decoration:underline}
+.isnad p{margin:10px 0 0;color:var(--ink-3);font-size:15px;line-height:1.9}
+.bookcomment{margin-top:22px;padding:18px 20px;border-radius:18px;background:var(--panel-2)}
+.bookcomment .h{font-size:13px;color:var(--ink-3);margin-bottom:6px}
+.bookcomment p{margin:0;font-size:15.5px;color:var(--ink-2);line-height:1.95}
+.related{margin-top:18px;padding:16px 20px;border-radius:18px;border:1px solid var(--line-2)}
+.related .h{font-size:13px;color:var(--ok);margin-bottom:4px}
+.related p{margin:0;font-family:var(--display);font-size:22px;line-height:1.8}
+.related small{display:block;color:var(--ink-3);font-size:13px;margin-top:4px}
+
+.reply{padding:28px 36px 30px}
+.reply-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.reply-top h3{margin:0;font-size:17px}
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:12px;padding:3px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:9px;cursor:pointer;font-size:13.5px;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--panel-2);color:var(--ink);font-weight:700}
+.replybox{min-height:120px;border-radius:18px;background:var(--panel-2);padding:18px 22px;font-size:16px;line-height:1.85;white-space:pre-wrap;unicode-bidi:plaintext}
+.replybox.ltr{direction:ltr;text-align:left}
+.replybox .think{color:var(--ink-3)}
+.row{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.btn{height:42px;padding:0 18px;border-radius:12px;border:1px solid var(--line-2);background:transparent;cursor:pointer;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none}
+.btn:hover{border-color:var(--ink-3)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.flash{font-size:13px;color:var(--ok)}
+.fine{font-size:12.5px;color:var(--ink-3)}
+
+/* ledger */
+.ledger{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:26px 24px 18px;position:sticky;top:18px}
+.ledger h3{margin:0 0 2px;font-size:17px}
+.ledger > p{margin:0 0 16px;font-size:13.5px;color:var(--ink-3)}
+.grp{margin-top:18px}
+.grp-h{font-size:12.5px;color:var(--ink-3);margin-bottom:8px;display:flex;justify-content:space-between}
+.item{display:block;width:100%;text-align:right;border:1px solid var(--line);background:transparent;border-radius:16px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.item:hover{border-color:var(--line-2)}
+.item[aria-current="true"]{border-color:var(--accent);background:var(--panel-2)}
+.item .t{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.item .bk{font-weight:700;font-size:14.5px}
+.item .no{font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.item .rel{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-size:12px;padding:2px 9px;border-radius:12px;white-space:normal;max-width:100%;overflow-wrap:anywhere}
+.c-ok{background:var(--ok-bg);color:var(--ok)} .c-warn{background:var(--warn-bg);color:var(--warn)} .c-bad{background:var(--bad-bg);color:var(--bad)} .c-none{background:var(--none-bg);color:var(--none)}
+.chip i{font-style:normal;font-weight:400}
+.ext{display:block;margin-top:14px;font-size:13.5px;color:var(--violet-2)}
+
+/* not found */
+.nf-list{margin:18px 0 0;padding:0 20px 0 0;color:var(--ink-2)}
+.nf-list li{margin-bottom:6px}
+
+/* method */
+.method{display:flex;flex-wrap:wrap;gap:8px 26px;padding:16px 4px 0;font-size:13px;color:var(--ink-3)}
+.method b{color:var(--ink-2);font-weight:500}
+
+/* candidates (fallback) */
+.cands{margin-top:14px}
+
+/* principles */
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding:48px 0 30px;border-top:1px solid var(--line);margin-top:34px}
+.rules h4{font-family:var(--display);font-weight:400;font-size:28px;margin:0 0 6px;line-height:1.3}
+.rules p{margin:0;color:var(--ink-2);font-size:14.5px}
+footer{padding:10px 0 40px;font-size:12.5px;color:var(--ink-3);line-height:1.9}
+footer b{color:var(--ink-2);font-weight:500}
+footer a{color:var(--violet-2)}
+
+/* quran */
+@font-face{font-family:"KFGQPC Uthmanic Script HAFS";src:url("fonts/uthmanic-hafs.otf") format("opentype");font-display:swap}
+@font-face{font-family:"Uthman Taha Naskh";src:url("fonts/uthman-tn.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Uthman Taha Naskh";src:url("fonts/uthman-tn-bold.ttf") format("truetype");font-weight:700;font-display:swap}
+.ayah{font-family:"Uthman Taha Naskh",serif!important;font-size:clamp(26px,3vw,34px)!important;line-height:2.3!important}
+.ayah.uthmani{font-family:"KFGQPC Uthmanic Script HAFS","Uthman Taha Naskh",serif!important;font-size:clamp(28px,3.2vw,38px)!important;line-height:2.4!important}
+/* AI suggestions */
+.sugs{display:grid;gap:12px;margin-top:22px}
+.sug{display:grid;gap:8px;text-align:right;width:100%;border:1.5px solid var(--line-2);background:var(--panel-2);border-radius:18px;padding:18px 20px;cursor:pointer;color:var(--ink);transition:border-color .15s}
+.sug:hover,.sug:focus-visible{border-color:var(--accent)}
+.sug-t{font-family:var(--display);font-size:24px;line-height:1.8}
+.sug-m{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;color:var(--ink-3);flex-wrap:wrap}
+.sug-go{font-size:14px;color:var(--accent);font-weight:700}
+/* glossary */
+.term{margin-top:14px;font-size:14px;color:var(--ink-2)}
+.term summary{cursor:pointer;color:var(--violet-2);list-style:none}
+.term summary::-webkit-details-marker{display:none}
+.term summary::before{content:"؟ ";font-weight:700}
+.term p{margin:8px 0 0;padding:12px 14px;border-radius:12px;background:var(--panel-2);line-height:1.9}
+/* scholars */
+.scholars{padding:6px 0 34px;border-top:1px solid var(--line)}
+.scholars h4{font-family:var(--display);font-weight:400;font-size:28px;margin:26px 0 6px}
+.scholars p{margin:0 0 14px;color:var(--ink-2);font-size:14.5px}
+.names{display:flex;flex-wrap:wrap;gap:8px}
+.names span{font-size:13.5px;padding:5px 12px;border-radius:999px;border:1px solid var(--line-2);color:var(--ink-2)}
+.names span.c{border-color:var(--accent);color:var(--ink)}
+.names span.p{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+/* AI chip */
+.aichip{font:inherit;font-size:12.5px;background:transparent;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:12.5px;padding:4px 12px;border-radius:999px;border:1px solid var(--line-2);color:var(--ink-2)}
+.aichip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ink-3)}
+.aichip[data-s="loading"]::before{background:var(--warn);animation:pulse 1.2s infinite}
+.aichip:disabled{cursor:default}
+.aichip[data-s="off"]{border-color:var(--violet-2);color:var(--ink)}
+.aichip[data-s="ready"]{border-color:var(--accent);color:var(--ink)}
+.aichip[data-s="ready"]::before{background:var(--ok)}
+.aichip[data-s="error"]::before,.aichip[data-s="unavailable"]::before{background:var(--none)}
+@keyframes pulse{50%{opacity:.3}}
+.linkbtn{border:0;background:none;padding:0;color:var(--violet-2);text-decoration:underline;cursor:pointer;font:inherit}
+/* loader */
+.bar{height:2px;background:var(--line);border-radius:2px;overflow:hidden;width:120px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+
+@media (max-width:900px){
+  .board{grid-template-columns:1fr}
+  .ledger{position:static}
+  .rules{grid-template-columns:1fr;gap:26px}
+  .steps{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .hero::before{inset:0 -16px}
+  .verdict,.matn,.reply{padding-left:22px;padding-right:22px}
+  .field{flex-direction:column}
+  .actions{justify-content:space-between}
+  .go{flex:1;justify-content:center}
+  .meta .hide-s{display:none}
+  .meta{flex-direction:column;align-items:flex-end;gap:6px}
+  .aichip{white-space:nowrap;font-size:11.5px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="mark">
+      <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 3l4.9 12.1L37 20l-12.1 4.9L20 37l-4.9-12.1L3 20l12.1-4.9z" stroke="var(--accent)"/><circle cx="20" cy="20" r="4.2"/></g></svg>
+      <b>تبيَّن</b>
+    </div>
+    <div class="meta">
+      <span class="dbstate"><span class="dot" id="dbDot"></span><span id="dbText">جارٍ تحميل القاعدة</span><span class="bar" id="dbBar"><i></i></span></span>
+      <span class="hide-s"><strong id="nRecs">—</strong> رواية</span>
+      <button class="aichip" id="aiChip" type="button" data-s="off"></button><span class="hide-s" id="dorarState"></span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>قبل أن تنشره… تبيَّن.</h1>
+    <p class="sub">أداة مدعومة بالذكاء الاصطناعي. الصق أي كلام يُنسب إلى النبي ﷺ بالعربية أو الإنجليزية أو الفرنسية أو الأردية أو الإندونيسية أو الصينية أو السواحيلية. نعيده إلى نصه العربي، ونُريك أين ورد، وماذا قال المحدّثون فيه. وإن لم نجده، نقولها صراحة.</p>
+
+    <div class="composer-wrap" id="cwrap">
+      <div class="composer">
+        <div class="field">
+          <textarea id="q" rows="2" placeholder="الصق الحديث المنتشر هنا…" aria-label="النص المراد التحقق منه"></textarea>
+          <div class="actions">
+            <button class="go" id="go" type="button" disabled>تحقّق</button>
+          </div>
+        </div>
+              </div>
+      
+    </div>
+
+    <div class="tries" id="tries">
+      <small>جرّب:</small>
+      <button class="try" type="button">The Prophet said: seek knowledge even if you have to go to China</button>
+      <button class="try" type="button">Paradise lies under the feet of mothers</button>
+      <button class="try" type="button">The strong man is not the one who wrestles, but the one who controls himself when angry</button>
+      <button class="try" type="button">Le meilleur d'entre vous est celui qui apprend le Coran et l'enseigne</button>
+      <button class="try" type="button">صفائی نصف ایمان ہے</button>
+      <button class="try" type="button">一切行为都以举意为准</button>
+      <button class="try" type="button">Hakika matendo yanategemea nia</button>
+      <button class="try" type="button">حب الوطن من الإيمان</button>
+      <button class="try" type="button">Allah does not burden a soul beyond its capacity</button>
+      <button class="try" type="button">Cleanliness is next to godliness</button>
+    </div>
+    
+
+    <ol class="steps" id="steps" hidden>
+      <li data-k="read"><b>قراءة المدخل</b><span class="d">—</span></li>
+      <li data-k="search"><b>البحث في القاعدة</b><span class="d">—</span></li>
+      <li data-k="match"><b>مطابقة الروايات</b><span class="d">—</span></li>
+      <li data-k="judge"><b>جمع الأحكام</b><span class="d">—</span></li>
+    </ol>
+    
+  </section>
+
+  <section class="result" id="result" aria-live="polite" hidden></section>
+
+  <section class="rules" aria-label="كيف يعمل تبيَّن">
+    <div><h4>لا حكم بلا مصدر</h4><p>نموذج ذكاء اصطناعي يعمل على جهازك يفهم المعنى بأي لغة ويصل إلى الأصل العربي، ثم تقرر قواعد شفافة. كل حكم منقول من كتاب أو محدّث مسمّى على منهج أهل السنة.</p></div>
+    <div><h4>«لم أجده» ليست «موضوع»</h4><p>إذا لم نعثر على النص في القاعدة لا نحكم عليه. نقول ذلك، ونحيلك إلى مختص في الحديث.</p></div>
+    <div><h4>الكلام من الكتاب</h4><p>تعليق المصنّف وشرح موسوعة الأحاديث النبوية المترجمة يظهران بنصّهما، دون إعادة صياغة.</p></div>
+  </section>
+  <section class="scholars" aria-label="منهج تبيَّن">
+    <h4>المنهج: أهل السنة والجماعة على فهم السلف الصالح</h4>
+    <p>تُعرض أحكام أئمة الحديث المتقدمين، والمحققين المعاصرين المعتمدين على منهج السلف الصالح، وفق المعتمد في المملكة العربية السعودية، والمرجع في الحديث الموسوعة الحديثية بالدرر السنية.</p>
+    <div class="names" id="scholarNames"></div>
+  </section>
+  <footer>
+    <b>المصادر:</b> متون الكتب السبعة وترجماتها وأحكام المحققين (مشروع hadith-api المفتوح)؛ مسند الإمام أحمد كاملًا (Open-Hadith-Data، رخصة ODbL)؛ سنن الدارمي ورياض الصالحين وبلوغ المرام ومشكاة المصابيح والأدب المفرد والشمائل والأربعينات (hadith-json، مصدرها sunnah.com)؛ الأحاديث الموضوعة والضعيفة مع تعليقات مصنّفيها (NAH وMAHADDAT، CC BY 4.0)؛ الترجمات والشروح متعددة اللغات من موسوعة الأحاديث النبوية المترجمة (HadeethEnc.com) دون تعديل. الذكاء الاصطناعي: نموذج multilingual-e5-small (MIT) داخل المتصفح. وعند النشر على خادم تُضاف الموسوعة الحديثية في الدرر السنية مباشرة.
+    <br><b>إفصاح:</b> تبيَّن أداة مدعومة بالذكاء الاصطناعي، وليست عالمًا ولا مفتيًا، ولا تُصدر فتوى. <b>الخصوصية:</b> لا نجمع أي بيانات؛ البحث والذكاء الاصطناعي يعملان على جهازك. القرآن الكريم: نص مصحف مجمع الملك فهد (رواية حفص) والترجمة الإنجليزية صحيح إنترناشيونال.<br><a href="about.html">المنهج والمصادر</a> · <a href="about.html#privacy">سياسة الخصوصية</a> · مقدَّم في تحدي الذكاء الاصطناعي في خدمة المحتوى الإسلامي. لا يغني عن سؤال أهل العلم.
+  </footer>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

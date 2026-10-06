@@ -1,0 +1,11 @@
+node_modules/
+.wrangler/
+.dev.vars
+# (fonts/salawat.woff is a 2.6KB subset of Amiri, SIL OFL 1.1 — safe to commit)
+# Licensed commercial fonts (29LT Bukra / 29LT Azer) — do NOT publish in a public repo
+public/fonts/*.ttf
+public/fonts/*.otf
+dist/
+public/data/emb/_progress*
+# AI model (118 MB > GitHub's 100 MB file limit): npm run fetch:model
+public/models/Xenova/

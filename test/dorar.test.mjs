@@ -1,0 +1,10 @@
+import { parseDorarResponse } from "../lib/dorar.js";
+import fs from "node:fs"; import assert from "node:assert";
+const r = parseDorarResponse(JSON.parse(fs.readFileSync(new URL("./fixture-dorar.json", import.meta.url))));
+console.log(JSON.stringify(r, null, 1));
+assert.equal(r.length, 3);
+assert.equal(r[0].muhaddith, "الألباني"); assert.equal(r[0].source, "صحيح النسائي"); assert.equal(r[0].ref, "433");
+assert.equal(r[0].grade, "إسناده صحيح"); assert.equal(r[0].truncated, true); assert.equal(r[0].rawi, "طارق بن شهاب");
+assert.equal(r[1].truncated, false); assert.equal(r[1].rawi, ""); assert.equal(r[1].ref, "1/257");
+assert.ok(!r[0].text.endsWith(".") && !r[1].text.endsWith("."));
+console.log("dorar parser: OK");

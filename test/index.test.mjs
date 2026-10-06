@@ -1,0 +1,14 @@
+import fs from "node:fs"; import zlib from "node:zlib"; import assert from "node:assert";
+import { buildIndex, bm25 } from "../public/logic.js";
+import { buildTrIndex, trSearch } from "../public/engine.js";
+import { decodeIndex } from "../public/binindex.js";
+const gz = f => JSON.parse(zlib.gunzipSync(fs.readFileSync(f)));
+const db = gz("public/data/db.json.gz");
+let t = Date.now(); const live = await buildIndex(db); const tb = Date.now() - t;
+t = Date.now(); const bin = { db, ...decodeIndex(zlib.gunzipSync(fs.readFileSync("public/data/index-ar.bin.gz"))) }; const td = Date.now() - t;
+console.log(`arabic index: tokenise ${tb}ms vs decode ${td}ms`);
+for (const q of ["إنما الأعمال بالنيات", "اطلبوا العلم ولو بالصين", "من غشنا فليس منا", "الجنة تحت أقدام الأمهات"]) assert.deepEqual(bm25(bin, q, 10).map(x => x.d), bm25(live, q, 10).map(x => x.d), q);
+const arr = gz("public/data/tr-en.json.gz"); const liveT = buildTrIndex(arr, "en");
+const binT = { arr, lang: "en", ...decodeIndex(zlib.gunzipSync(fs.readFileSync("public/data/index-en.bin.gz"))) };
+for (const q of ["Actions are judged by intentions", "Paradise is under the shade of swords"]) assert.deepEqual(trSearch(binT, q, 5).map(x => x.d), trSearch(liveT, q, 5).map(x => x.d), q);
+console.log("binary index identical: OK");

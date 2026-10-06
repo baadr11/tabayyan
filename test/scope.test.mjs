@@ -1,0 +1,25 @@
+import fs from "node:fs"; import zlib from "node:zlib"; import assert from "node:assert";
+import { buildQuran, findVerse, verseRef, scopeOf } from "../public/scope.js";
+const Q = await buildQuran(JSON.parse(zlib.gunzipSync(fs.readFileSync("public/data/quran.json.gz"))), () => Promise.resolve());
+const chk = (t, l, s, a) => { const v = findVerse(Q, t, l); const r = v && verseRef(Q, v.d); console.log(t.slice(0, 50), "→", r ? `${r.sura} ${r.s}:${r.a}` : "—"); if (Array.isArray(s)) assert.ok(r && s.some(([x, y]) => r.s === x && r.a === y), t); else if (s) assert.ok(r && r.s === s && r.a === a, t); else assert.equal(v, null, t); };
+chk("Allah does not burden a soul beyond its capacity", "en", [[2, 286], [23, 62], [7, 42], [6, 152]]);
+chk("لا يكلف الله نفسا إلا وسعها", "ar", 2, 286);
+chk("إن مع العسر يسرا", "ar", [[94, 5], [94, 6]]);
+chk("Indeed, with hardship comes ease", "en", [[94, 5], [94, 6]]);
+chk("اطلبوا العلم ولو بالصين", "ar");
+chk("Actions are judged by intentions", "en");
+chk("إنما الأعمال بالنيات", "ar");
+assert.equal(scopeOf("هل يجوز لي أن أتزوج بدون ولي في بلدي؟"), "fatwa");
+assert.equal(scopeOf("Is it halal to eat this?"), "fatwa");
+assert.equal(scopeOf("أعطني حديثا يثبت أن الصبر مفتاح الفرج"), "ask-hadith");
+assert.equal(scopeOf("Give me a hadith about patience"), "ask-hadith");
+assert.equal(scopeOf("The Prophet said: seek knowledge even in China"), null);
+console.log("scope: OK");
+// Shu'ayb al-Arna'ut removed everywhere (team decision)
+import { fromDorar, fromLocal } from "../public/logic.js";
+assert.equal(fromDorar({ text: "x", muhaddith: "شعيب الأرناؤوط", source: "تخريج المسند", ref: "1", grade: "إسناده صحيح" }, 0), null);
+assert.ok(fromDorar({ text: "x", muhaddith: "الألباني", source: "صحيح الجامع", ref: "1", grade: "صحيح" }, 0));
+const dbx = JSON.parse(zlib.gunzipSync(fs.readFileSync("public/data/db.json.gz")));
+const withS = dbx.recs.findIndex(r => /(^|;)S:/.test(r[3] || ""));
+assert.ok(withS >= 0 && !fromLocal(dbx, withS).grades.some(g => /الأرناؤوط/.test(g.who)));
+console.log("Shu'ayb excluded: OK");

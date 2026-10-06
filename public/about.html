@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>عن تبيَّن — المنهج والمصادر والخصوصية</title>
+<meta name="description" content="منهج تبيَّن ومصادره وطريقة عمله وسياسة الخصوصية.">
+<meta name="theme-color" content="#12183F">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+@font-face{font-family:"Bukra";src:url("fonts/bukra-regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Bukra";src:url("fonts/bukra-bold.ttf") format("truetype");font-weight:700;font-display:swap}
+@font-face{font-family:"Azer";src:url("fonts/azer.ttf") format("truetype");font-display:swap}
+@font-face{font-family:"Salawat";src:url("fonts/salawat.woff") format("woff");unicode-range:U+FDFA-FDFB}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#0E1336;--panel:#161D4A;--line:rgba(242,244,255,.12);--ink:#F2F4FF;--ink-2:#C3C8EC;--ink-3:#8990BF;--accent:#2EF2C2}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#F2F4FF;--panel:#FFFFFF;--line:rgba(18,24,63,.12);--ink:#12183F;--ink-2:#434A78;--ink-3:#596089;--accent:#5A49E0}}
+:root[data-theme="light"]{--bg:#F2F4FF;--panel:#FFFFFF;--line:rgba(18,24,63,.12);--ink:#12183F;--ink-2:#434A78;--ink-3:#596089;--accent:#5A49E0}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Salawat","Bukra","Readex Pro",Tahoma,sans-serif;line-height:1.9;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:28px 22px 60px}
+a{color:var(--accent)}
+h1{font-family:"Azer","Readex Pro",sans-serif;font-weight:400;font-size:clamp(40px,7vw,64px);margin:18px 0 8px;line-height:1.2}
+h2{font-family:"Azer","Readex Pro",sans-serif;font-weight:400;font-size:30px;margin:44px 0 10px}
+p,li{color:var(--ink-2)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px 22px;margin:14px 0}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:right;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--ink-3);font-weight:500}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top a{text-decoration:none;font-family:"Azer","Readex Pro",sans-serif;font-size:28px;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chips span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:14px;color:var(--ink-2)}
+.chips span.p{border-color:var(--accent);color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a href="./">تبيَّن</a><a href="./" style="font-size:15px;font-family:inherit">← العودة إلى التحقق</a></div>
+  <h1>عن تبيَّن</h1>
+  <p>أداة مدعومة بالذكاء الاصطناعي للتحقق من نسبة الأحاديث المنتشرة إلى النبي ﷺ. يلصق المستخدم النص بأي لغة، فتعيده الأداة إلى أصله العربي، وتُظهر موضعه في كتب السنة وأحكام المحدّثين عليه، وتكتب ردًّا جاهزًا بلغة السائل. وإن لم تجده قالت «لم أجده» وأحالت إلى مختص.</p>
+  <div class="card"><b>ما لا يفعله تبيَّن:</b> لا يُصدر فتوى، ولا يحكم على الأشخاص، ولا يولّد أحاديث، ولا يحكم على حديث من عنده. كل حكم يعرضه منقول من محدّث مسمّى ومصدر محدد.</div>
+
+  <h2>كيف يعمل</h2>
+  <ol>
+    <li><b>فهم المعنى:</b> نموذج ذكاء اصطناعي متعدد اللغات يعمل داخل المتصفح على جهازك، يصل إلى الأصل العربي حتى لو اختلفت الصياغة.</li>
+    <li><b>البحث:</b> في نحو 79 ألف رواية من كتب السنة وكتب الموضوعات، وفي الموسوعة الحديثية بالدرر السنية عند الاتصال.</li>
+    <li><b>المطابقة:</b> قواعد شفافة تقرر «مطابق» أو «قريب المعنى» أو «لم أجده»، وتمتنع عند انخفاض الثقة.</li>
+    <li><b>الحكم:</b> منقول من أحكام المحدّثين؛ وإن اختلفوا عُرض الخلاف كما هو دون ترجيح آلي.</li>
+    <li><b>الرد الجاهز:</b> قوالب ثابتة تقتبس الترجمات المعتمدة فقط، ولا تولّد نصًّا.</li>
+  </ol>
+
+  <h2>المنهج</h2>
+  <p>منهج أهل السنة والجماعة على فهم السلف الصالح، وفق المعتمد في المملكة العربية السعودية. والمرجع في الحديث الموسوعة الحديثية بالدرر السنية.</p>
+  <div class="chips">
+    <span class="p">الإمام البخاري</span><span class="p">الإمام مسلم</span><span class="p">الإمام أحمد بن حنبل</span><span class="p">الإمام مالك</span><span class="p">شيخ الإسلام ابن تيمية</span>
+    <span>محمد ناصر الدين الألباني</span><span>عبد العزيز بن باز</span><span>محمد بن صالح العثيمين</span><span>اللجنة الدائمة</span><span>عبد الرحمن المعلمي اليماني</span><span>أحمد محمد شاكر</span><span>مقبل بن هادي الوادعي</span><span>حماد الأنصاري</span><span>عبد المحسن العباد</span><span>عبد القادر الأرناؤوط</span><span>زبير علي زئي</span><span>سليم الهلالي</span><span>وأئمة الحديث المتقدمون</span>
+  </div>
+
+  <h2>المطابقة مع المرجعية والحزمة العلمية للتحدي</h2>
+  <div class="tbl"><table>
+    <tr><th>البند</th><th>التطبيق في تبيَّن</th></tr>
+    <tr><td>لا يُنسب حديث دون مصدر وحكم معتمد</td><td>كل حكم مقرون بالمحدّث والكتاب والرقم؛ والمرجع الموسوعة الحديثية</td></tr>
+    <tr><td>مقاومة الهلوسة</td><td>الامتناع والإحالة عند غياب المرجع أو انخفاض الثقة</td></tr>
+    <tr><td>التمييز بين القطعي والاجتهادي</td><td>«مختلف فيه» مع عدد القابلين والرادّين</td></tr>
+    <tr><td>عدم الاستقلال بالفتوى</td><td>أسئلة الفتوى تُعرف وتُحال إلى منصات معتمدة</td></tr>
+    <tr><td>الآية المنقولة على أنها حديث</td><td>تُميَّز وتُعرض بسورتها ورقمها من مصحف مجمع الملك فهد</td></tr>
+    <tr><td>الترجمة والتوطين</td><td>لا يُقتبس إلا من ترجمات منصات جمعية خدمة المحتوى الإسلامي باللغات</td></tr>
+    <tr><td>الشفافية</td><td>إفصاح دائم بأنها أداة مدعومة بالذكاء الاصطناعي</td></tr>
+    <tr><td>الخصوصية</td><td>انظر سياسة الخصوصية أدناه</td></tr>
+  </table></div>
+
+  <h2 id="privacy">سياسة الخصوصية</h2>
+  <ul>
+    <li>لا حسابات، ولا ملفات تعريف ارتباط، ولا أدوات تتبع أو تحليلات.</li>
+    <li>البحث في القاعدة المحلية ونموذج الذكاء الاصطناعي يعملان على جهازك؛ النص الذي تلصقه لا يغادره.</li>
+    <li>عند البحث في الموسوعة الحديثية يُرسل النص العربي المستخرج فقط إلى خادم تبيَّن ثم إلى الدرر السنية، دون أي معرّف لك، ولا نحتفظ بسجل للنصوص.</li>
+    <li>عند أول تفعيل للذكاء الاصطناعي يُنزَّل النموذج من موقع تبيَّن نفسه ويُحفظ في متصفحك؛ لا اتصال بأي طرف ثالث.</li>
+    <li>لا تُستنتج من استخدامك أي سمات دينية أو شخصية.</li>
+  </ul>
+
+  <h2>المصادر والرخص</h2>
+  <ul>
+    <li>الموسوعة الحديثية — الدرر السنية (dorar.net)، عبر واجهتها البرمجية العامة.</li>
+    <li>الكتب السبعة وأحكام المحققين: مشروع hadith-api المفتوح. مسند الإمام أحمد: Open-Hadith-Data (ODbL). الدارمي والجوامع: hadith-json (مصدره sunnah.com).</li>
+    <li>كتب الموضوعات وتعليقات مصنّفيها: مدوّنتا NAH وMAHADDAT (CC BY 4.0).</li>
+    <li>الترجمات والشروح المعتمدة: موسوعة الأحاديث النبوية المترجمة والقاعدة المركزية للمحتوى الإسلامي باللغات، دون تعديل.</li>
+    <li>القرآن الكريم: نص مصحف مجمع الملك فهد لطباعة المصحف الشريف (رواية حفص) وخطوطه؛ الترجمة الإنجليزية صحيح إنترناشيونال.</li>
+    <li>نموذج الذكاء الاصطناعي: multilingual-e5-small (رخصة MIT)، ويعمل عبر Transformers.js (Apache-2.0) وONNX Runtime Web (MIT).</li>
+  </ul>
+
+  <h2>إفصاح</h2>
+  <p>تبيَّن أداة مدعومة بالذكاء الاصطناعي، وليست عالمًا ولا مفتيًا. قد تخطئ المطابقة، فارجع إلى أهل العلم فيما يُشكل. مقدَّم في تحدي الذكاء الاصطناعي في خدمة المحتوى الإسلامي (مؤسسة باذل الأهلية).</p>
+</div>
+</body>
+</html>

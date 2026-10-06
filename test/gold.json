@@ -1,0 +1,361 @@
+{
+ "note": "مسودة مجموعة الاختبار — كل حالة تحتاج اعتماد المتخصص الشرعي (review). word = الحكم المتوقع كما تعرضه الأداة، found=false يعني يجب أن تقول «لم أجده».",
+ "cases": [
+  {
+   "q": "The Prophet said: seek knowledge even if you have to go to China",
+   "found": true,
+   "word": "موضوع"
+  },
+  {
+   "q": "Paradise lies under the feet of mothers",
+   "found": true,
+   "word": "بلفظ آخر"
+  },
+  {
+   "q": "Actions are judged by intentions",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "The reward of deeds depends on the intentions",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "Le meilleur d'entre vous est celui qui apprend le Coran et l'enseigne",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "صفائی نصف ایمان ہے",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "Kebersihan sebagian dari iman",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "حب الوطن من الإيمان",
+   "found": true,
+   "word": "لا أصل له"
+  },
+  {
+   "q": "Cleanliness is next to godliness",
+   "found": false
+  },
+  {
+   "q": "Allah does not burden a soul beyond its capacity",
+   "found": false,
+   "why": "آية قرآنية لا حديث"
+  },
+  {
+   "q": "The strong man is not the one who wrestles, but the one who controls himself when angry",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "A Muslim is the one from whose tongue and hand the Muslims are safe",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "Whoever believes in Allah and the Last Day should honour his guest",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "Islam is built on five pillars",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "The best among you are those with the best character",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "A good word is charity",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "Do not envy one another",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "Every innovation is misguidance",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "Whoever removes a worldly hardship from a believer, Allah will remove from him a hardship on the Day of Resurrection",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "Part of the perfection of one's Islam is leaving what does not concern him",
+   "found": true
+  },
+  {
+   "q": "Wealth does not decrease because of charity",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "Difference of opinion in my ummah is a mercy",
+   "found": true
+  },
+  {
+   "q": "I am the city of knowledge and Ali is its gate",
+   "found": true
+  },
+  {
+   "q": "Whoever knows himself knows his Lord",
+   "found": true
+  },
+  {
+   "q": "إنما الأعمال بالنيات",
+   "found": true,
+   "word": "صحيح"
+  },
+  {
+   "q": "اطلبوا العلم ولو بالصين",
+   "found": true,
+   "word": "موضوع"
+  },
+  {
+   "q": "النظافة من الإيمان",
+   "found": false
+  },
+  {
+   "q": "一切行为都以举意为准",
+   "found": true,
+   "word": "صحيح",
+   "needs": "ai",
+   "ar": "إنما الأعمال بالنيات"
+  },
+  {
+   "q": "你们中最优秀的人是学习《古兰经》并教授它的人",
+   "found": true,
+   "word": "صحيح",
+   "needs": "ai",
+   "ar": "من تعلم القرآن"
+  },
+  {
+   "q": "Hakika matendo yanategemea nia",
+   "found": true,
+   "word": "صحيح",
+   "needs": "ai",
+   "ar": "إنما الأعمال بالنيات"
+  },
+  {
+   "q": "Mbora wenu ni yule aliyejifunza Qur'ani na akaifundisha",
+   "found": true,
+   "word": "صحيح",
+   "needs": "ai",
+   "ar": "من تعلم القرآن"
+  },
+  {
+   "q": "Tafuteni elimu hata China",
+   "found": true,
+   "word": "موضوع",
+   "needs": "ai"
+  },
+  {
+   "q": "The most beloved of deeds to Allah are those done regularly even if small",
+   "found": true
+  },
+  {
+   "q": "Feed the hungry, visit the sick and free the captive",
+   "found": true
+  },
+  {
+   "q": "Allah is kind and loves kindness in all things",
+   "found": true
+  },
+  {
+   "q": "The Muslim is the brother of the Muslim",
+   "found": true,
+   "ar": "المسلم أخو المسلم"
+  },
+  {
+   "q": "Make things easy and do not make them difficult",
+   "found": true
+  },
+  {
+   "q": "Whoever fasts Ramadan out of faith and seeking reward, his previous sins will be forgiven",
+   "found": true
+  },
+  {
+   "q": "Whoever is not merciful to others will not be shown mercy",
+   "found": true
+  },
+  {
+   "q": "The world is sweet and green",
+   "found": true
+  },
+  {
+   "q": "Gabriel kept advising me about the neighbor",
+   "found": true
+  },
+  {
+   "q": "Verily Allah is gentle and loves gentleness",
+   "found": true
+  },
+  {
+   "q": "Religion is easy",
+   "found": true
+  },
+  {
+   "q": "Smiling at your brother is charity",
+   "found": true
+  },
+  {
+   "q": "Whoever guides someone to goodness will have a reward like the one who did it",
+   "found": true
+  },
+  {
+   "q": "Fear Allah wherever you are",
+   "found": true
+  },
+  {
+   "q": "Paradise is under the shade of swords",
+   "found": true
+  },
+  {
+   "q": "Modesty brings nothing but good",
+   "found": true
+  },
+  {
+   "q": "Visit the sick, feed the hungry",
+   "found": true
+  },
+  {
+   "q": "The believer to another believer is like a building",
+   "found": true
+  },
+  {
+   "q": "A man follows the religion of his friend",
+   "found": true
+  },
+  {
+   "q": "Al-Hajj is Arafah",
+   "found": true
+  },
+  {
+   "q": "Seeking knowledge is an obligation upon every Muslim",
+   "found": true,
+   "not_word": "موضوع",
+   "why": "اللفظ نفسه لا يُحكم عليه بوضع رواية أطول تحتويه"
+  },
+  {
+   "q": "求知吧，哪怕远在中国",
+   "found": true,
+   "needs": "ai",
+   "word": "موضوع",
+   "ar": "اطلبوا العلم"
+  },
+  {
+   "q": "清洁是信仰的一半",
+   "found": true,
+   "needs": "ai",
+   "word": "صحيح",
+   "ar": "الطهور شطر الإيمان"
+  },
+  {
+   "q": "不要发怒",
+   "found": true,
+   "needs": "ai",
+   "word": "صحيح",
+   "ar": "لا تغضب"
+  },
+  {
+   "q": "天堂在母亲的脚下",
+   "found": true,
+   "needs": "ai",
+   "word": "بلفظ آخر",
+   "ar": "الجنة تحت"
+  },
+  {
+   "q": "今天天气很好",
+   "found": false,
+   "needs": "ai"
+  },
+  {
+   "q": "爱国是信仰的一部分",
+   "found": true,
+   "needs": "ai",
+   "ar": "حب الوطن"
+  },
+  {
+   "q": "Usikasirike",
+   "found": true,
+   "needs": "ai",
+   "word": "صحيح",
+   "ar": "لا تغضب"
+  },
+  {
+   "q": "Dini ni nyepesi",
+   "found": true,
+   "needs": "ai",
+   "word": "صحيح",
+   "ar": "الدين يسر"
+  },
+  {
+   "q": "Hali ya hewa ni nzuri leo",
+   "found": false,
+   "needs": "ai"
+  },
+  {
+   "q": "Usafi ni nusu ya imani",
+   "found": true,
+   "needs": "ai",
+   "word": "صحيح"
+  },
+  {
+   "q": "Les actions ne valent que par les intentions",
+   "found": true,
+   "needs": "ai",
+   "word": "صحيح"
+  },
+  {
+   "q": "La pudeur fait partie de la foi",
+   "found": true,
+   "needs": "ai",
+   "word": "صحيح"
+  },
+  {
+   "q": "Jangan marah",
+   "found": true,
+   "needs": "ai",
+   "word": "صحيح",
+   "ar": "لا تغضب"
+  },
+  {
+   "q": "Sebaik-baik kalian adalah orang yang belajar Al-Qur'an dan mengajarkannya",
+   "found": true,
+   "needs": "ai",
+   "word": "صحيح"
+  },
+  {
+   "q": "غصہ نہ کرو",
+   "found": true,
+   "needs": "ai",
+   "word": "صحيح",
+   "ar": "لا تغضب"
+  },
+  {
+   "q": "The weather is very nice today",
+   "found": false,
+   "needs": "ai"
+  },
+  {
+   "q": "I love pizza and football",
+   "found": false,
+   "needs": "ai"
+  }
+ ]
+}
